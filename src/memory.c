@@ -93,9 +93,10 @@ uint8_t readMemory(uint16_t guestAddr){
 
 	addr = unmapMemory(guestAddr, &mode);
 
-	if((mode&0x0f) == MM_OPENBUS) return dataBusBuf;
+	if((mode&0x0f) == MM_OPENBUS || (mode&0x0f) == MM_WRITONLY)
+		return dataBusBuf;
 
-	if(mode == MM_ZERO || (mode&0x0f) == MM_WRITONLY || !addr)
+	if(mode == MM_ZERO || !addr)
 		return (dataBusBuf = 0);
 
 	return (dataBusBuf = *addr);
