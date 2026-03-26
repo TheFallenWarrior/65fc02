@@ -1,10 +1,11 @@
+#include <conio.h>
+#include <joystick.h>
 #include <nes.h>
 #include <stdint.h>
 #include <stdlib.h>
 
 #include "6500.h"
 #include "alu.h"
-#include "conio.h"
 #include "instructions.h"
 #include "memory.h"
 

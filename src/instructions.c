@@ -1,8 +1,8 @@
+#include <conio.h>
 #include <stdint.h>
 #include <string.h>
 
 #include "6500.h"
-#include "conio.h"
 #include "instructions.h"
 #include "memory.h"
 
