@@ -15,7 +15,7 @@ enum _memory_map_modes{
 	MM_RAM      = 0x00, // Readable and writeable memory
 	MM_ZERO     = 0x01, // Returns 0 when read, implies not dynamic
 	MM_READONLY = 0x02, // Read only memory
-	MM_WRITONLY = 0x03, // Write-only, returns 0 when read
+	MM_WRITONLY = 0x03, // Write-only, behaves like open bus when read
 	MM_OPENBUS  = 0x04, // Open bus
 	MM_DYNAMIC  = 0x10, // Malloc'd memory region
 };
