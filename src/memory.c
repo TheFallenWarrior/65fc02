@@ -9,12 +9,13 @@
 	4:  for 6503, 6505, 6506, 6513, and 6515;
 	8:  for 6504, 6507, and 6514;
 	64: for 6501, 6502, and 6512. */
-const uint8_t addrSpace = 4;
+const uint8_t addrSpace = 8;
 
 // Simple test harness memory map
 MemoryRegion memoryMap[] = {
 	{0x0200, NULL, MM_RAM|MM_DYNAMIC},       // 512 bytes of RAM for zeropage and stack
-	{0x0600, NULL, MM_OPENBUS},              // Unused
+	{0x0e00, NULL, MM_OPENBUS},              // Unused
+	{0x0800, (void*)guest_rom, MM_READONLY}, // Program ROM
 	{0x0800, (void*)guest_rom, MM_READONLY}, // Program ROM
 };
 
