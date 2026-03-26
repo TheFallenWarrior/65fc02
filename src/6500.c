@@ -249,22 +249,23 @@ void executeInstruction(DecodedInstruction *ins){
 
 		case INS_JSR:
 		mcs6500.pc += instruction_length[AM_ABSOLUTE]-1;
-		pushToStack(LO_BYTE(mcs6500.pc));
 		pushToStack(HI_BYTE(mcs6500.pc));
+		pushToStack(LO_BYTE(mcs6500.pc));
 		mcs6500.pc = ins->param16;
 		ins->pc_mod = 1;
 		break;
 
 		case INS_RTS:
-		mcs6500.pc = pullFromStack()<<8 | pullFromStack();
+		tmp = pullFromStack();
+		mcs6500.pc = pullFromStack()<<8 | tmp;
 		++mcs6500.pc;
 		ins->pc_mod = 1;
 		break;
 
 		case INS_BRK:
 		mcs6500.pc += instruction_length[AM_ABSOLUTE]-1;
-		pushToStack(LO_BYTE(mcs6500.pc));
 		pushToStack(HI_BYTE(mcs6500.pc));
+		pushToStack(LO_BYTE(mcs6500.pc));
 		mcs6500.pc = readMemory(1+VEC_IRQ)<<8 | readMemory(VEC_IRQ);
 		pushToStack(mcs6500.p);
 		mcs6500.p |= PFLAG_B | PFLAG_I;
@@ -273,7 +274,8 @@ void executeInstruction(DecodedInstruction *ins){
 
 		case INS_RTI:
 		mcs6500.p = pullFromStack();
-		mcs6500.pc = pullFromStack()<<8 | pullFromStack();
+		tmp = pullFromStack();
+		mcs6500.pc = pullFromStack()<<8 | tmp;
 		++mcs6500.pc;
 		ins->pc_mod = 1;
 		break;
