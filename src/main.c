@@ -20,8 +20,8 @@ int main(){
     joy_install(joy_static_stddrv);
     clrscr();
 
-    // This fixes a problem with the cc65 runtime that causes malloc to fail
-    _heapadd((void*)0x6800, 0x800);
+    // Allow up to 4 KiB of malloc'd memory
+    _heapadd((void*)0x7000, 0x1000);
     
     if(initMemory()){
         cprintf("Failed to initialize memory.\n");
