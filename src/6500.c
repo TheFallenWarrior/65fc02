@@ -18,8 +18,8 @@ void pushToStack(uint8_t byte){
 uint8_t pullFromStack(){
 	uint8_t r;
 
-	r = readMemory(STACK_PTR());
 	++mcs6500.s;
+	r = readMemory(STACK_PTR());
 	return r;
 }
 
