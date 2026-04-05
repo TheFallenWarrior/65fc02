@@ -1,3 +1,4 @@
+#include <conio.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -6,6 +7,7 @@
 #include "alu.h"
 #include "instructions.h"
 #include "memory.h"
+#include "tracelog.h"
 #include "util.h"
 
 Processor mcs6500;
@@ -470,7 +472,7 @@ void fetchDecodeExecute(uint8_t debug_enable){
 	nextAddr = decodeInstruction(&ins);
 
 	// Trace log the instruction BEFORE executing it
-	if(debug_enable) debug();
+	if(debug_enable) cputs(tracelog());
 
 	executeInstruction(&ins);
 

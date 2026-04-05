@@ -107,7 +107,4 @@ uint16_t indirect_indexed_addr(uint8_t addr, uint8_t index);
 uint16_t indexed_indirect_addr(uint8_t addr, uint8_t index);
 uint16_t absolute_indirect_addr(uint16_t addr);
 
-uint16_t disassemble(uint16_t addr);
-void debug();
-
 #endif
