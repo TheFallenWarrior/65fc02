@@ -6,8 +6,6 @@
 #include "memory.h"
 #include "tracelog.h"
 
-/* ── helpers ──────────────────────────────────────────────────── */
-
 static char hex_char(uint8_t nibble) {
 	return nibble < 10 ? '0' + nibble : 'A' + (nibble - 10);
 }
