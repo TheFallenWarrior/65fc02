@@ -27,7 +27,7 @@ static void u16_to_hex(uint16_t v, char *out){
 // Get disassembly of instruction at addr;
 // Returns address of the next instruction
 uint16_t disassemble(uint16_t addr, char *out){
-	static char buf[12];
+	char buf[12];
 	char hbuf[5];   /* scratch: up to 4 hex digits + NUL */
 	Opcode   op;
 	uint8_t  param8  = readMemory(1 + addr);
