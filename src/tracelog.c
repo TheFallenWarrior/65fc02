@@ -42,54 +42,65 @@ uint16_t disassemble(uint16_t addr, char *out){
 	switch(op.addr_mode){
 		case AM_ACCUMULATOR:
 		case AM_IMPLIED:
-			strcat(buf, "        ");
-			break;
+		strcat(buf, "        ");
+		break;
+		
 		case AM_IMMEDIATE:
-			strcat(buf, " #$");   u8_to_hex(param8,  hbuf);  strcat(buf, hbuf);
-			strcat(buf, "   ");
-			break;
+		strcat(buf, " #$");   u8_to_hex(param8,  hbuf);  strcat(buf, hbuf);
+		strcat(buf, "   ");
+		break;
+		
 		case AM_ABSOLUTE:
-			strcat(buf, " $");    u16_to_hex(param16, hbuf);  strcat(buf, hbuf);
-			strcat(buf, "  ");
-			break;
+		strcat(buf, " $");    u16_to_hex(param16, hbuf);  strcat(buf, hbuf);
+		strcat(buf, "  ");
+		break;
+		
 		case AM_ZEROPAGE:
-			strcat(buf, " $");    u8_to_hex(param8,  hbuf);  strcat(buf, hbuf);
-			strcat(buf, "    ");
-			break;
+		strcat(buf, " $");    u8_to_hex(param8,  hbuf);  strcat(buf, hbuf);
+		strcat(buf, "    ");
+		break;
+		
 		case AM_INDEXED_ZEROPAGE_X:
-			strcat(buf, " $");    u8_to_hex(param8,  hbuf);  strcat(buf, hbuf);
-			strcat(buf, ",x  ");
-			break;
+		strcat(buf, " $");    u8_to_hex(param8,  hbuf);  strcat(buf, hbuf);
+		strcat(buf, ",x  ");
+		break;
+		
 		case AM_INDEXED_ZEROPAGE_Y:
-			strcat(buf, " $");    u8_to_hex(param8,  hbuf);  strcat(buf, hbuf);
-			strcat(buf, ",y  ");
-			break;
+		strcat(buf, " $");    u8_to_hex(param8,  hbuf);  strcat(buf, hbuf);
+		strcat(buf, ",y  ");
+		break;
+		
 		case AM_INDEXED_ABSOLUTE_X:
-			strcat(buf, " $");    u16_to_hex(param16, hbuf);  strcat(buf, hbuf);
-			strcat(buf, ",x");
-			break;
+		strcat(buf, " $");    u16_to_hex(param16, hbuf);  strcat(buf, hbuf);
+		strcat(buf, ",x");
+		break;
+		
 		case AM_INDEXED_ABSOLUTE_Y:
-			strcat(buf, " $");    u16_to_hex(param16, hbuf);  strcat(buf, hbuf);
-			strcat(buf, ",y");
-			break;
+		strcat(buf, " $");    u16_to_hex(param16, hbuf);  strcat(buf, hbuf);
+		strcat(buf, ",y");
+		break;
+		
 		case AM_RELATIVE:
-			strcat(buf, " $");
-			u16_to_hex(relative_addr(nextAddr, (int8_t)param8), hbuf);
-			strcat(buf, hbuf);
-			strcat(buf, "  ");
-			break;
+		strcat(buf, " $");
+		u16_to_hex(relative_addr(nextAddr, (int8_t)param8), hbuf);
+		strcat(buf, hbuf);
+		strcat(buf, "  ");
+		break;
+		
 		case AM_INDEXED_INDIRECT_X:
-			strcat(buf, " ($");   u8_to_hex(param8,  hbuf);  strcat(buf, hbuf);
-			strcat(buf, ",x)");
-			break;
+		strcat(buf, " ($");   u8_to_hex(param8,  hbuf);  strcat(buf, hbuf);
+		strcat(buf, ",x)");
+		break;
+		
 		case AM_INDIRECT_INDEXED_Y:
-			strcat(buf, " ($");   u8_to_hex(param8,  hbuf);  strcat(buf, hbuf);
-			strcat(buf, "),y");
-			break;
+		strcat(buf, " ($");   u8_to_hex(param8,  hbuf);  strcat(buf, hbuf);
+		strcat(buf, "),y");
+		break;
+		
 		case AM_ABSOLUTE_INDIRECT:
-			strcat(buf, " ($");   u16_to_hex(param16, hbuf);  strcat(buf, hbuf);
-			strcat(buf, ")");
-			break;
+		strcat(buf, " ($");   u16_to_hex(param16, hbuf);  strcat(buf, hbuf);
+		strcat(buf, ")");
+		break;
 	}
 
 	strcpy(out, buf);
