@@ -4,7 +4,7 @@
 
 #include "memory.h"
 
-/* Total size of adressable memory in kilobytes.
+/* Total size of addressable memory in kilobytes.
    Valid values:
 	4:  for 6503, 6505, 6506, 6513, and 6515;
 	8:  for 6504, 6507, and 6514;

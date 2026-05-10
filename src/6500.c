@@ -243,7 +243,7 @@ void executeInstruction(DecodedInstruction *ins){
 		} break;
 
 		// --------------------------------------
-		// Inconditional jumps
+		// Unconditional jumps
 		case INS_JMP:
 		mcs6500.pc = ins->param16;
 		ins->pc_mod = 1;
