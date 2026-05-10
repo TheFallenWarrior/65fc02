@@ -439,7 +439,7 @@ void executeInstruction(DecodedInstruction *ins){
 
 		case INS_ROL:
 		tmp = !!(ins->param8&0x80);
-		ins->param8 <<= 1 | (mcs6500.p&PFLAG_C);
+		ins->param8 = (ins->param8 << 1) | (mcs6500.p&PFLAG_C);
 		mcs6500.p &= ~PFLAG_C;
 		mcs6500.p |= tmp;
 
@@ -451,7 +451,7 @@ void executeInstruction(DecodedInstruction *ins){
 
 		case INS_ROR:
 		tmp = ins->param8&0x01;
-		ins->param8 >>= 1 | (mcs6500.p&PFLAG_C) << 7;
+		ins->param8 = (ins->param8 >> 1) | (mcs6500.p&PFLAG_C) << 7;
 		mcs6500.p &= ~PFLAG_C;
 		mcs6500.p |= tmp;
 
