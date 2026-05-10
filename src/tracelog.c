@@ -40,9 +40,12 @@ uint16_t disassemble(uint16_t addr, char *out){
 	strcpy(buf, mnemonics[op.instr]);   /* always 3 chars */
 
 	switch(op.addr_mode){
-		case AM_ACCUMULATOR:
 		case AM_IMPLIED:
 		strcat(buf, "        ");
+		break;
+
+		case AM_ACCUMULATOR:
+		strcat(buf, " a      ");
 		break;
 		
 		case AM_IMMEDIATE:
