@@ -393,13 +393,11 @@ uint16_t relative_addr(uint16_t addr, int8_t offset){
 }
 
 uint16_t indirect_indexed_addr(uint8_t addr, uint8_t index){
-	uint8_t ptr = (uint8_t)(addr + index);
-
-	return readMemoryZp16(ptr);
+    return readMemoryZp16(addr) + index;
 }
 
 uint16_t indexed_indirect_addr(uint8_t addr, uint8_t index){
-	return readMemoryZp16(addr) + index;
+	return readMemoryZp16(addr+index);
 }
 
 uint16_t absolute_indirect_addr(uint16_t addr){
