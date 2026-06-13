@@ -11,12 +11,12 @@
 	64: for 6501, 6502, and 6512. */
 const uint8_t addrSpace = 8;
 
-// Simple test harness memory map
+// Simple memory map for testing
 MemoryRegion memoryMap[] = {
 	{0x0200, NULL, MM_RAM|MM_DYNAMIC},       // 512 bytes of RAM for zeropage and stack
 	{0x0e00, NULL, MM_OPENBUS},              // Unused
 	{0x0800, (void*)guest_rom, MM_READONLY}, // Program ROM
-	{0x0800, (void*)guest_rom, MM_READONLY}, // Program ROM
+	{0x0800, (void*)guest_rom, MM_READONLY}, // Program ROM mirror
 };
 
 // Data bus buffer for open bus emulation
