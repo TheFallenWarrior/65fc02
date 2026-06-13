@@ -31,7 +31,7 @@ uint16_t disassemble(uint16_t addr, char *out){
 	char hbuf[5];   /* scratch: up to 4 hex digits + NUL */
 	Opcode   op;
 	uint8_t  param8  = readMemory(1 + addr);
-	uint16_t param16 = readMemory(1 + addr) | readMemory(2 + addr) << 8;
+	uint16_t param16 = readMemory16(1 + addr);
 	uint16_t nextAddr;
 
 	memcpy(&op, &opcodes[readMemory(addr)], sizeof(Opcode));

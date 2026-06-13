@@ -30,7 +30,7 @@ void reset(){
 	mcs6500.p &= ~PFLAG_I;
 
 	// Set PC to Reset routine
-	mcs6500.pc = readMemory(1+VEC_RST)<<8 | readMemory(VEC_RST);
+	mcs6500.pc = readMemory16(VEC_RST);
 }
 
 uint16_t decodeInstruction(DecodedInstruction *ins){
@@ -57,7 +57,7 @@ uint16_t decodeInstruction(DecodedInstruction *ins){
 		break;
 
 		case AM_ABSOLUTE:
-		ins->param16 = readMemory(1+mcs6500.pc) | (readMemory(2+mcs6500.pc)<<8);
+		ins->param16 = readMemory16(1+mcs6500.pc);
 		ins->param8 = readMemory(ins->param16);
 		break;
 
@@ -84,7 +84,7 @@ uint16_t decodeInstruction(DecodedInstruction *ins){
 
 		case AM_INDEXED_ABSOLUTE_X:
 		ins->param16 = indexed_absolute_addr(
-			readMemory(1+mcs6500.pc) | (readMemory(2+mcs6500.pc)<<8),
+			readMemory16(1+mcs6500.pc),
 			mcs6500.x
 		);
 		ins->param8 = readMemory(ins->param16);
@@ -92,7 +92,7 @@ uint16_t decodeInstruction(DecodedInstruction *ins){
 
 		case AM_INDEXED_ABSOLUTE_Y:
 		ins->param16 = indexed_absolute_addr(
-			readMemory(1+mcs6500.pc)  | (readMemory(2+mcs6500.pc)<<8),
+			readMemory16(1+mcs6500.pc),
 			mcs6500.y
 		);
 		ins->param8 = readMemory(ins->param16);
@@ -124,7 +124,7 @@ uint16_t decodeInstruction(DecodedInstruction *ins){
 
 		// Only used by JMP (indirect)
 		case AM_ABSOLUTE_INDIRECT:
-		ins->param16 = absolute_indirect_addr(readMemory(1+mcs6500.pc)  | (readMemory(2+mcs6500.pc)<<8));
+		ins->param16 = absolute_indirect_addr(readMemory16(1+mcs6500.pc));
 	}
 
 	return mcs6500.pc + instruction_length[ins->operation.addr_mode];
@@ -268,7 +268,7 @@ void executeInstruction(DecodedInstruction *ins){
 		mcs6500.pc += instruction_length[AM_ABSOLUTE]-1;
 		pushToStack(HI_BYTE(mcs6500.pc));
 		pushToStack(LO_BYTE(mcs6500.pc));
-		mcs6500.pc = readMemory(1+VEC_IRQ)<<8 | readMemory(VEC_IRQ);
+		mcs6500.pc = readMemory16(VEC_IRQ);
 		pushToStack(mcs6500.p);
 		mcs6500.p |= PFLAG_B | PFLAG_I;
 		ins->pc_mod = 1;

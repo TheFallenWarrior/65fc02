@@ -27,6 +27,9 @@ extern const uint8_t addrSpace;
 
 uint8_t initMemory();
 uint8_t readMemory(uint16_t guestAddr);
+uint8_t readMemoryZp(uint8_t guestAddr);
+uint16_t readMemory16(uint16_t guestAddr);
+uint16_t readMemoryZp16(uint8_t guestAddr);
 void writeMemory(uint16_t guestAddr, uint8_t byte);
 
 #endif

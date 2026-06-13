@@ -103,6 +103,18 @@ uint8_t readMemory(uint16_t guestAddr){
 	return (dataBusBuf = *addr);
 }
 
+uint8_t readMemoryZp(uint8_t guestAddr){
+	return readMemory(guestAddr);
+}
+
+uint16_t readMemory16(uint16_t guestAddr){
+	return readMemory(guestAddr) | (readMemory(1+guestAddr) << 8);
+}
+
+uint16_t readMemoryZp16(uint8_t guestAddr){
+	return readMemoryZp(guestAddr) | (readMemoryZp(1+guestAddr) << 8);
+}
+
 void writeMemory(uint16_t guestAddr, uint8_t byte){
 	uint8_t mode;
 	uint8_t *addr;
@@ -115,9 +127,7 @@ void writeMemory(uint16_t guestAddr, uint8_t byte){
 		(mode&0x0f) == MM_READONLY ||
 		(mode&0x0f) == MM_OPENBUS ||
 		!addr
-	){
-		return;
-	}
+	) return;
 
 	*addr = byte;
 }
