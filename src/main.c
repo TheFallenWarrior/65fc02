@@ -41,7 +41,7 @@ int main(){
             gotoxy(0, 0);
         }
 
-        fetchDecodeExecute(1);
+        cputs(fetchDecodeExecute());
         waitForInput(0);
     }
 

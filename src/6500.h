@@ -38,6 +38,6 @@ void reset();
 uint16_t decodeInstruction(DecodedInstruction *ins);
 void executeInstruction(DecodedInstruction *ins);
 
-void fetchDecodeExecute(uint8_t debug_enable);
+char* fetchDecodeExecute();
 
 #endif

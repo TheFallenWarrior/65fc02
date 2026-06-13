@@ -1,4 +1,3 @@
-#include <conio.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -464,19 +463,22 @@ void executeInstruction(DecodedInstruction *ins){
 }
 
 // One Fetch-Decode-Execute cycle
-void fetchDecodeExecute(uint8_t debug_enable){
+char* fetchDecodeExecute(){
 	uint16_t nextAddr;
 	DecodedInstruction ins;
+	char* trace;
 
 	mcs6500.ir = readMemory(mcs6500.pc);
 	nextAddr = decodeInstruction(&ins);
 
-	// Trace log the instruction BEFORE executing it
-	if(debug_enable) cputs(tracelog());
+	// Trace log the instruction
+	trace = tracelog();
 
 	executeInstruction(&ins);
 
 	if(!ins.pc_mod){
 		mcs6500.pc = nextAddr;
 	}
+
+	return trace;
 }
