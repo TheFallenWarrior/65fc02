@@ -10,14 +10,12 @@ typedef struct{
 	uint8_t  mode;  // Region attribute flags
 } MemoryRegion;
 
-// Flags for region attributes.
-enum _memory_map_modes{
-	MM_RAM      = 0x00, // Readable and writeable memory
-	MM_ZERO     = 0x01, // Returns 0 when read, implies not dynamic
-	MM_READONLY = 0x02, // Read only memory
-	MM_WRITONLY = 0x03, // Write-only, behaves like open bus when read
-	MM_OPENBUS  = 0x04, // Open bus
-	MM_DYNAMIC  = 0x10, // Malloc'd memory region
+enum _memory_map_modes {
+    MM_READ    = 0x01,  // Reads come from backing memory
+    MM_WRITE   = 0x02,  // Writes go to backing memory
+    MM_PULLDN  = 0x04,  // Unmapped reads return 0 (not data bus buffer)
+    MM_DYNAMIC = 0x10,  // Backing memory was malloc'd
+    MM_OPENBUS = 0x00,  // Not readable, not writeable, not pulled down
 };
 
 extern const uint8_t guest_rom[];

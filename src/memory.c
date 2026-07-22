@@ -13,10 +13,10 @@ const uint8_t addrSpace = 8;
 
 // Simple memory map for testing
 MemoryRegion memoryMap[] = {
-	{0x0200, NULL, MM_RAM|MM_DYNAMIC},       // 512 bytes of RAM for zeropage and stack
-	{0x0e00, NULL, MM_OPENBUS},              // Unused
-	{0x0800, (void*)guest_rom, MM_READONLY}, // Program ROM
-	{0x0800, (void*)guest_rom, MM_READONLY}, // Program ROM mirror
+	{0x0200, NULL, MM_READ|MM_WRITE|MM_DYNAMIC}, // 512 bytes of RAM for zeropage and stack
+	{0x0e00, NULL, MM_OPENBUS}, // Unused
+	{0x0800, (void*)guest_rom, MM_READ}, // Program ROM
+	{0x0800, (void*)guest_rom, MM_READ}, // Program ROM mirror
 };
 
 // Data bus buffer for open bus emulation
@@ -26,7 +26,7 @@ uint8_t dataBusBuf;
 uint8_t initMemory(){
 	uint16_t memTotal = 0;
 	void *tmp;
-	uint8_t i, failed = 0, tmp2;
+	uint8_t i, failed = 0;
 
 	if(
 		addrSpace != 4  &&
@@ -37,10 +37,8 @@ uint8_t initMemory(){
 	for(i = 0; i < (sizeof(memoryMap)/sizeof(MemoryRegion)); ++i){
 		memTotal += memoryMap[i].size;
 
-		tmp2 = memoryMap[i].mode;
-		if(tmp2 != MM_ZERO && (tmp2&0x0f) != MM_OPENBUS && (tmp2&0xf0) == MM_DYNAMIC){
+		if((memoryMap[i].mode&MM_DYNAMIC) && !memoryMap[i].addr){
 			tmp = malloc(memoryMap[i].size);
-
 			if(!tmp){
 				failed = 1;
 				break;
@@ -51,10 +49,9 @@ uint8_t initMemory(){
 	if(!failed && memTotal == addrSpace*1024) return 0;
 
 	for(i = 0; i < (sizeof(memoryMap)/sizeof(MemoryRegion)); ++i){
-		tmp2 = memoryMap[i].mode;
-		if(tmp2 != MM_ZERO && (tmp2&0x0f) != MM_OPENBUS && (tmp2&0xf0) == MM_DYNAMIC){
-			if(!memoryMap[i].addr) break;
+		if((memoryMap[i].mode&MM_DYNAMIC) && memoryMap[i].addr){
 			free(memoryMap[i].addr);
+			memoryMap[i].addr = NULL;
 		}
 	}
 	return 1;
@@ -64,7 +61,7 @@ uint8_t initMemory(){
 void *unmapMemory(uint16_t guestAddr, uint8_t *mode){
 	uint16_t memCount = 0;
 	uint8_t i;
-	
+
 	switch(addrSpace){
 		case 4:
 		guestAddr = guestAddr & 0x0fff;
@@ -84,7 +81,7 @@ void *unmapMemory(uint16_t guestAddr, uint8_t *mode){
 		memCount += memoryMap[i].size;
 	}
 
-	*mode = MM_ZERO;
+	*mode = MM_OPENBUS;
 	return NULL;
 }
 
@@ -94,13 +91,13 @@ uint8_t readMemory(uint16_t guestAddr){
 
 	addr = unmapMemory(guestAddr, &mode);
 
-	if((mode&0x0f) == MM_OPENBUS || (mode&0x0f) == MM_WRITONLY)
-		return dataBusBuf;
-
-	if(mode == MM_ZERO || !addr)
+	if(mode&MM_PULLDN)
 		return (dataBusBuf = 0);
+	
+	if(mode&MM_READ && addr)
+		return (dataBusBuf = *addr);
 
-	return (dataBusBuf = *addr);
+	return dataBusBuf;
 }
 
 uint8_t readMemoryZp(uint8_t guestAddr){
@@ -122,12 +119,6 @@ void writeMemory(uint16_t guestAddr, uint8_t byte){
 	addr = unmapMemory(guestAddr, &mode);
 	dataBusBuf = byte;
 
-	if(
-		mode == MM_ZERO ||
-		(mode&0x0f) == MM_READONLY ||
-		(mode&0x0f) == MM_OPENBUS ||
-		!addr
-	) return;
-
-	*addr = byte;
+	if((mode&MM_WRITE) && addr)
+		*addr = byte;
 }
