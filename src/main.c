@@ -29,8 +29,9 @@ int main(){
         while(1);
     }
 
-    // I don't particularly trust _heapmemavail's output but display it anyway
-    cprintf("Free memory: %u bytes\r\n\n", _heapmemavail());
+    // Show free heap memory
+    // On the NES, _heapmemavail's output seems to be off by ~42000 bytes
+    cprintf("Free memory: %u bytes\r\n\n", _heapmemavail()-42012u);
 
     reset(); // Reset guest CPU
     while(1){
