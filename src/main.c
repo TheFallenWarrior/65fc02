@@ -5,8 +5,6 @@
 #include <stdlib.h>
 
 #include "6500.h"
-#include "alu.h"
-#include "instructions.h"
 #include "memory.h"
 
 // Waits for input specified by a mask and then returns it
