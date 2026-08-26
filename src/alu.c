@@ -29,7 +29,7 @@ uint8_t alu_adc(uint8_t a, uint8_t b){
 
 uint8_t alu_sbc(uint8_t a, uint8_t b, uint8_t cmp){
 	int16_t r;
-	uint8_t c = (mcs6500.p&PFLAG_C) | cmp;
+	uint8_t c = (mcs6500.p&PFLAG_C) | !!cmp;
 
 	r = a - b - (1-c);
 
