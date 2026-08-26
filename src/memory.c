@@ -91,11 +91,11 @@ uint8_t readMemory(uint16_t guestAddr){
 
 	addr = unmapMemory(guestAddr, &mode);
 
-	if(mode&MM_PULLDN)
-		return (dataBusBuf = 0);
-	
 	if(mode&MM_READ && addr)
 		return (dataBusBuf = *addr);
+
+	if(mode&MM_PULLDN)
+		return (dataBusBuf = 0);
 
 	return dataBusBuf;
 }
