@@ -173,17 +173,14 @@ void executeInstruction(DecodedInstruction *ins){
 		// Comparisons
 		case INS_CMP:
 		tmp = alu_sbc(mcs6500.a, ins->param8, 1);
-		updateNZ(tmp);
 		break;
 
 		case INS_CPX:
 		tmp = alu_sbc(mcs6500.x, ins->param8, 1);
-		updateNZ(tmp);
 		break;
 
 		case INS_CPY:
 		tmp = alu_sbc(mcs6500.y, ins->param8, 1);
-		updateNZ(tmp);
 		break;
 
 		case INS_BIT:
@@ -362,12 +359,10 @@ void executeInstruction(DecodedInstruction *ins){
 		// Logic-arithmetic
 		case INS_ADC:
 		mcs6500.a = alu_adc(mcs6500.a, ins->param8);
-		updateNZ(mcs6500.a);
 		break;
 
 		case INS_SBC:
 		mcs6500.a = alu_sbc(mcs6500.a, ins->param8, 0);
-		updateNZ(mcs6500.a);
 		break;
 
 		case INS_INC:
