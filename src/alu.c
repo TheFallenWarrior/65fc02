@@ -34,7 +34,7 @@ uint8_t alu_sbc(uint8_t a, uint8_t b, uint8_t cmp){
 	r = a - b - (1-c);
 
 	mcs6500.p &= ~PFLAG_C;
-	if(r <= 0xff) mcs6500.p |= PFLAG_C;
+	if(r >= 0) mcs6500.p |= PFLAG_C;
 
 	if(!cmp){
 		mcs6500.p &= ~PFLAG_V;
