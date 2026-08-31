@@ -265,7 +265,7 @@ void executeInstruction(DecodedInstruction *ins){
 		pushToStack(HI_BYTE(mcs6500.pc));
 		pushToStack(LO_BYTE(mcs6500.pc));
 		mcs6500.pc = readMemory16(VEC_IRQ);
-		pushToStack(mcs6500.p&PFLAG_U);
+		pushToStack(mcs6500.p|PFLAG_U);
 		mcs6500.p |= PFLAG_B | PFLAG_I;
 		ins->pc_mod = 1;
 		break;
@@ -319,7 +319,7 @@ void executeInstruction(DecodedInstruction *ins){
 		break;
 
 		case INS_PHP:
-		pushToStack(mcs6500.p&PFLAG_U);
+		pushToStack(mcs6500.p|PFLAG_U);
 		break;
 
 		case INS_PLP:
