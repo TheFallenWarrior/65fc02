@@ -43,6 +43,4 @@ int main(){
         cputs(fetchDecodeExecute());
         waitForInput(0);
     }
-
-    return 0;
 }

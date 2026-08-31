@@ -8,6 +8,7 @@
 // Flags for the processor status registrer
 #define PFLAG_N 0x80 // Negative
 #define PFLAG_V 0x40 // Overflow
+#define PFLAG_U 0x20 // Unused
 #define PFLAG_B 0x10 // Break
 #define PFLAG_D 0x08 // Decimal mode enable
 #define PFLAG_I 0x04 // Interrupt disable
